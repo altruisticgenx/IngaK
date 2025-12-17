@@ -32,7 +32,7 @@ const HeroSection = () => {
               <a href="#facebook" className="w-12 h-12 rounded-full border-2 border-border hover:border-primary hover:bg-muted transition-all flex items-center justify-center hover:scale-110" aria-label="Facebook">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#linkedin" className="w-12 h-12 rounded-full border-2 border-border hover:border-primary hover:bg-muted transition-all flex items-center justify-center hover:scale-110" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/in/ik11/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border-2 border-border hover:border-primary hover:bg-muted transition-all flex items-center justify-center hover:scale-110" aria-label="LinkedIn">
                 <Linkedin className="w-5 h-5" />
               </a>
             </div>
