@@ -125,7 +125,7 @@ const Navbar: React.FC<Props> = ({ activeSection, scrolled, onNavigate }) => {
             ref={menuButtonRef}
             className="md:hidden p-1.5 text-slate-300 hover:text-white transition-colors z-50 relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded-md"
             onClick={toggleMenu}
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-label="Toggle navigation menu"
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
           >
