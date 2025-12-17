@@ -1,14 +1,20 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import type { ChatMessage } from "@/lib/ai/streamChat";
 import { HttpError, streamChat } from "@/lib/ai/streamChat";
+import type { User } from "@supabase/supabase-js";
 
 const Chat = () => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState<User | null>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: "assistant",
@@ -25,11 +31,26 @@ const Chat = () => {
     document.title = "AI Chatbot | Perspective";
   }, []);
 
+  // Check authentication
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      setIsAuthLoading(false);
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      setIsAuthLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const canSend = useMemo(() => input.trim().length > 0 && !isStreaming, [input, isStreaming]);
+  const canSend = useMemo(() => input.trim().length > 0 && !isStreaming && !!user, [input, isStreaming, user]);
 
   const stop = useCallback(() => {
     abortRef.current?.abort();
@@ -39,7 +60,7 @@ const Chat = () => {
 
   const send = useCallback(async () => {
     const trimmed = input.trim();
-    if (!trimmed || isStreaming) return;
+    if (!trimmed || isStreaming || !user) return;
 
     const userMsg: ChatMessage = { role: "user", content: trimmed };
     setInput("");
@@ -77,6 +98,10 @@ const Chat = () => {
       abortRef.current = null;
 
       if (e instanceof HttpError) {
+        if (e.status === 401) {
+          toast.error("Please sign in to use the chat feature.");
+          return;
+        }
         if (e.status === 429) {
           toast.error("Too many requests — please wait and try again.");
           return;
@@ -91,7 +116,41 @@ const Chat = () => {
 
       toast.error(e instanceof Error ? e.message : "Failed to start chat.");
     }
-  }, [input, isStreaming, messages]);
+  }, [input, isStreaming, messages, user]);
+
+  // Show loading state
+  if (isAuthLoading) {
+    return (
+      <div className="min-h-screen bg-background animate-fade-in">
+        <Header />
+        <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex items-center justify-center h-[60vh]">
+            <p className="text-muted-foreground">Loading...</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // Show sign-in prompt if not authenticated
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-background animate-fade-in">
+        <Header />
+        <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <Card className="border-border/60 p-8 text-center">
+            <h1 className="text-2xl font-bold mb-4">Sign In Required</h1>
+            <p className="text-muted-foreground mb-6">
+              Please sign in to use the AI chatbot feature.
+            </p>
+            <Button onClick={() => navigate("/auth")}>
+              Sign In
+            </Button>
+          </Card>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background animate-fade-in">
@@ -101,7 +160,7 @@ const Chat = () => {
         <header className="mb-6">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">AI Chatbot</h1>
           <p className="text-muted-foreground mt-2 max-w-2xl">
-            Streaming responses powered by Lovable AI (google/gemini-2.5-flash).
+            Streaming responses powered by Lovable AI.
           </p>
         </header>
 
