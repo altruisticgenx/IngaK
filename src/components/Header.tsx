@@ -37,7 +37,7 @@ const Header = () => {
 
   return (
     <header className="fixed top-2 left-2 right-2 z-50 md:top-3 md:left-3 md:right-3">
-      <nav className="max-w-5xl mx-auto">
+      <nav className="max-w-5xl mx-auto" role="navigation" aria-label="Main navigation">
         {/* Main Nav Container - 3D effect */}
         <div 
           className="
@@ -149,14 +149,17 @@ const Header = () => {
                 hover:translate-y-[1px]
                 active:shadow-none active:translate-y-[2px]
                 transition-all duration-150
+                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary
               "
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle menu"
+              aria-label="Toggle navigation menu"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
             >
               {isMenuOpen ? (
-                <X className="h-4 w-4 text-foreground" />
+                <X className="h-4 w-4 text-foreground" aria-hidden="true" />
               ) : (
-                <Menu className="h-4 w-4 text-foreground" />
+                <Menu className="h-4 w-4 text-foreground" aria-hidden="true" />
               )}
             </button>
           </div>
@@ -164,7 +167,11 @@ const Header = () => {
 
         {/* Mobile Menu - 3D dropdown */}
         {isMenuOpen && (
-          <div 
+          <div
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu" 
             className="
               md:hidden mt-1
               bg-gradient-to-b from-[hsl(var(--surface-elevated))] to-[hsl(var(--background))]

@@ -6,6 +6,7 @@ import Expertise from '@/sections/Expertise';
 import Experience from '@/sections/Experience';
 import Qualifications from '@/sections/Qualifications';
 import Projects from '@/sections/Projects';
+import Articles from '@/sections/Articles';
 import Footer from '@/components/portfolio/layout/Footer';
 import { debounce, type DebouncedFn } from '@/utils/debounce';
 
@@ -27,7 +28,7 @@ const Portfolio: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const sections = ['home', 'about', 'expertise', 'experience', 'qualifications', 'projects', 'contact'];
+    const sections = ['home', 'about', 'expertise', 'experience', 'qualifications', 'projects', 'articles', 'contact'];
 
     debouncedScrollRef.current = debounce(() => {
       setScrolled(window.scrollY > 20);
@@ -72,6 +73,7 @@ const Portfolio: React.FC = () => {
         <Experience />
         <Qualifications />
         <Projects />
+        <Articles />
       </main>
       
       <Footer onNavigate={scrollToSection} />

@@ -35,7 +35,7 @@ test.describe("Keyboard Navigation", () => {
   });
 
   test("Tab cycles through all nav items", async ({ page }) => {
-    const navItems = ["About", "Expertise", "Experience", "Qualifications", "Projects"];
+    const navItems = ["About", "Expertise", "Experience", "Qualifications", "Projects", "Articles"];
 
     // Skip to first nav item
     await page.keyboard.press("Tab"); // skip link

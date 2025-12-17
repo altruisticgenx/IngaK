@@ -25,20 +25,22 @@ const ArticleCard = ({ id, title, category, date, image, size = "small" }: Artic
   return (
     <a
       href={`/article/${id}`}
-      className={`group relative block rounded-[2.5rem] overflow-hidden card-hover ${
+      className={`group relative block rounded-[2.5rem] overflow-hidden card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
         size === "large" ? "col-span-1 md:col-span-2 row-span-2" : ""
       }`}
+      aria-label={`Read article: ${title}`}
     >
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden bg-muted rounded-[2.5rem]">
         <img
           src={image}
-          alt={title}
+          alt={`Cover image for ${title}`}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          loading="lazy"
         />
         
         {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" aria-hidden="true" />
         
         {/* Content overlay */}
         <div className="absolute inset-0 p-8 flex flex-col justify-between">
@@ -47,15 +49,18 @@ const ArticleCard = ({ id, title, category, date, image, size = "small" }: Artic
             <span className={`px-4 py-1.5 rounded-full text-xs font-medium backdrop-blur-md ${getCategoryClass(category)} bg-opacity-80`}>
               {category}
             </span>
-            <span className="px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-xs font-medium text-white border border-white/30">
+            <time 
+              dateTime={date}
+              className="px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-xs font-medium text-white border border-white/30"
+            >
               {date}
-            </span>
+            </time>
           </div>
 
           {/* Bottom section - Title and Arrow */}
           <div className="flex items-end justify-between gap-4">
             <div className="flex-1">
-              <span className="text-white/50 text-xs font-medium tracking-wider block mb-3">{id}</span>
+              <span className="text-white/50 text-xs font-medium tracking-wider block mb-3" aria-hidden="true">{id}</span>
               <h3 className="text-white text-xl md:text-2xl lg:text-3xl font-bold leading-tight tracking-tight">
                 {title}
               </h3>
@@ -64,7 +69,7 @@ const ArticleCard = ({ id, title, category, date, image, size = "small" }: Artic
         </div>
 
         {/* Floating circular arrow button - positioned outside content overlay */}
-        <div className="absolute bottom-6 right-6 floating-button">
+        <div className="absolute bottom-6 right-6 floating-button" aria-hidden="true">
           <ArrowUpRight className="w-5 h-5" />
         </div>
       </div>

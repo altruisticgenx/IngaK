@@ -15,7 +15,11 @@ const navItems: NavItem[] = [
   { name: 'Experience', id: 'experience' },
   { name: 'Qualifications', id: 'qualifications' },
   { name: 'Projects', id: 'projects' },
+  { name: 'Articles', id: 'articles' },
 ];
+
+// External link for Blog
+const blogLink = { name: 'Blog', href: '/blog' };
 
 const Navbar: React.FC<Props> = ({ activeSection, scrolled, onNavigate }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -111,6 +115,13 @@ const Navbar: React.FC<Props> = ({ activeSection, scrolled, onNavigate }) => {
                 onClick={handleNavigate}
               />
             ))}
+            <a
+              href={blogLink.href}
+              className="font-medium text-sm text-slate-400 hover:text-cyan-400 transition-all duration-300 relative group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded"
+            >
+              {blogLink.name}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+            </a>
             <button
               onClick={() => handleNavigate('contact')}
               className="px-5 py-2 rounded-full border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/10 transition-all text-sm font-semibold hover:scale-105 active:scale-95 ml-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
@@ -153,6 +164,13 @@ const Navbar: React.FC<Props> = ({ activeSection, scrolled, onNavigate }) => {
               mobile
             />
           ))}
+          <a
+            href={blogLink.href}
+            className="text-3xl py-3 w-full text-center font-medium text-slate-400 hover:text-cyan-300 transition-all duration-300"
+            role="menuitem"
+          >
+            {blogLink.name}
+          </a>
           <button
             onClick={() => handleNavigate('contact')}
             className="mt-6 w-full px-8 py-3 rounded-xl bg-cyan-600 text-white font-bold text-lg shadow-lg shadow-cyan-900/30 hover:bg-cyan-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"

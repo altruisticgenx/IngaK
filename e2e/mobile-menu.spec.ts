@@ -30,7 +30,7 @@ test.describe("Mobile Menu Functionality", () => {
     const menuButton = page.getByLabel(/toggle navigation menu/i);
     await menuButton.click();
 
-    const navItems = ["About", "Expertise", "Experience", "Qualifications", "Projects"];
+    const navItems = ["About", "Expertise", "Experience", "Qualifications", "Projects", "Articles"];
 
     for (const item of navItems) {
       const link = page.getByRole("dialog").getByRole("button", { name: new RegExp(item, "i") });
