@@ -1,73 +1,66 @@
-# Welcome to your Lovable project
+# Inga Kaltak Portfolio - AI Policy & Engineering
 
-## Project info
+Professional portfolio for an AI policy researcher and applied AI engineer, featuring a blog with AI-generated summaries and interactive chat functionality.
 
-**URL**: https://lovable.dev/projects/7410f81b-8218-4f2d-bb32-1ba1f84eabb2
+## Features
 
-## How can I edit this code?
+- **Portfolio**: Hero, About, Expertise, Experience, Qualifications, Projects sections
+- **Blog**: Article categories with AI-powered summarization
+- **AI Chat**: Streaming responses with authentication and rate limiting
+- **Accessibility**: ARIA attributes, keyboard navigation, screen reader support
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- **Frontend**: React 18, TypeScript, Vite, TailwindCSS, shadcn/ui
+- **Backend**: Lovable Cloud (Supabase), Edge Functions
+- **AI**: Lovable AI with google/gemini-2.5-flash
+- **Testing**: Vitest (unit), Playwright (E2E)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/7410f81b-8218-4f2d-bb32-1ba1f84eabb2) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Quick Start
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+# Navigate to project directory
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Project Structure
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```
+src/
+├── components/     # UI components (navigation, ui, layout)
+├── sections/       # Page sections (Hero, About, etc.)
+├── pages/          # Route pages
+├── hooks/          # Custom React hooks
+├── lib/            # Utilities and AI integration
+├── types/          # TypeScript type definitions
+└── tests/          # Test files
+supabase/
+├── functions/      # Edge functions (chat, summarize)
+└── config.toml     # Supabase configuration
+```
 
-**Use GitHub Codespaces**
+## Development
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- **Lovable**: Visit [Lovable Project](https://lovable.dev/projects/7410f81b-8218-4f2d-bb32-1ba1f84eabb2)
+- **Local IDE**: Clone repo and push changes
+- **GitHub Codespaces**: Launch from repository
 
-## What technologies are used for this project?
+## Deployment
 
-This project is built with:
+Open [Lovable](https://lovable.dev/projects/7410f81b-8218-4f2d-bb32-1ba1f84eabb2) and click Share → Publish.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Security
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/7410f81b-8218-4f2d-bb32-1ba1f84eabb2) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- JWT authentication on protected endpoints
+- Rate limiting (50 req/hour per user)
+- Input validation and sanitization
+- Row Level Security on database tables

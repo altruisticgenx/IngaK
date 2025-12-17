@@ -1,0 +1,33 @@
+{
+  "projectName": "Inga Kaltak Portfolio",
+  "description": "AI policy researcher and applied AI engineer portfolio with blog and AI chat functionality",
+  "frameworks": [
+    {
+      "name": "React",
+      "version": "18.3.1"
+    },
+    {
+      "name": "TypeScript",
+      "version": "5.x"
+    },
+    {
+      "name": "Vite",
+      "version": "5.x"
+    },
+    {
+      "name": "TailwindCSS",
+      "version": "3.x"
+    }
+  ],
+  "features": {
+    "authentication": true,
+    "database": true,
+    "edgeFunctions": true,
+    "aiIntegration": true
+  },
+  "styling": {
+    "theme": "dark",
+    "colorScheme": "cyan-slate",
+    "designSystem": "shadcn-ui"
+  }
+}
