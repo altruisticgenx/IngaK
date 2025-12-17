@@ -33,6 +33,7 @@ const Header = () => {
     { label: "Work", href: "/Work" },
     { label: "Projects", href: "/Projects" },
     { label: "About", href: "/about" },
+    { label: "AI Chat", href: "/chat" },
   ];
 
   return (
