@@ -65,7 +65,7 @@ const Hero: React.FC<Props> = ({ onNavigate }) => {
 
             {/* Feature Pills */}
             <div className="flex flex-wrap gap-2 sm:gap-3 justify-center lg:justify-start animate-slide-up stagger-4">
-              {['NIST Frameworks', 'LLM Integration', 'Secure Governance'].map((tag, i) => (
+              {['NIST Frameworks', 'LLM Integration', 'Secure Governance'].map((tag) => (
                 <span 
                   key={tag}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800/50 border border-slate-700/50 text-xs sm:text-sm text-slate-300 hover:border-cyan-500/50 hover:text-cyan-400 transition-all duration-300 cursor-default"

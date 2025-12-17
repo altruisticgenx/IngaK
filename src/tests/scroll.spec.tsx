@@ -1,6 +1,5 @@
 import * as React from "react";
 import { render, act } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { vi, describe, it, expect, beforeEach, afterEach } from "vitest";
 import { BrowserRouter } from "react-router-dom";
 import Portfolio from "../pages/Portfolio";

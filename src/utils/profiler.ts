@@ -76,9 +76,9 @@ export function onRenderCallback(
   id: string,
   phase: 'mount' | 'update' | 'nested-update',
   actualDuration: number,
-  baseDuration: number,
-  startTime: number,
-  commitTime: number
+  _baseDuration: number,
+  _startTime: number,
+  _commitTime: number
 ): void {
   if (import.meta.env.DEV) {
     const isExpensive = actualDuration > 16; // > 1 frame at 60fps
