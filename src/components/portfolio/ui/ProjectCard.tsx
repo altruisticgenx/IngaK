@@ -24,29 +24,29 @@ const ProjectCard: React.FC<Props> = ({ title, desc, tags, icon: Icon, color, vi
 
   return (
     <article
-      className={`flex flex-col h-full bg-slate-900 rounded-xl overflow-hidden border border-slate-800 transition-all duration-300 group hover:-translate-y-1 hover:shadow-xl focus-within:ring-2 focus-within:ring-cyan-400 ${theme.border} ${theme.shadow}`}
+      className={`flex flex-col h-full bg-slate-900 rounded-lg overflow-hidden border border-slate-700/50 transition-all duration-300 group hover:-translate-y-0.5 hover:shadow-lg focus-within:ring-1 focus-within:ring-cyan-400 ${theme.border} ${theme.shadow}`}
       aria-labelledby={`project-${title.replace(/\s+/g, '-').toLowerCase()}`}
     >
-      <div className="h-32 sm:h-48 bg-slate-800 relative overflow-hidden shrink-0" aria-hidden="true">
+      <div className="h-20 sm:h-28 bg-slate-800 relative overflow-hidden shrink-0" aria-hidden="true">
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent z-10" />
         {visual}
-        <div className="absolute bottom-4 left-4 sm:left-6 z-20">
-          <div className={`inline-flex p-2 ${theme.bg} rounded-lg text-white shadow-lg`}>
-            <Icon size={20} aria-hidden="true" />
+        <div className="absolute bottom-2 left-2 sm:left-3 z-20">
+          <div className={`inline-flex p-1.5 ${theme.bg} rounded-md text-white shadow-md`}>
+            <Icon size={14} aria-hidden="true" />
           </div>
         </div>
       </div>
-      <div className="p-4 sm:p-6 flex flex-col grow">
+      <div className="p-3 sm:p-4 flex flex-col grow">
         <h3
           id={`project-${title.replace(/\s+/g, '-').toLowerCase()}`}
-          className="text-xl font-bold text-slate-100 mb-2 group-hover:text-cyan-400 transition-colors"
+          className="text-sm sm:text-base font-bold text-slate-100 mb-1 group-hover:text-cyan-400 transition-colors leading-tight"
         >
           {title}
         </h3>
-        <p className="text-slate-400 text-sm mb-4 leading-relaxed grow">{desc}</p>
-        <ul className="flex flex-wrap gap-2 mt-auto" aria-label="Technologies used">
+        <p className="text-slate-400 text-xs mb-2 leading-relaxed grow line-clamp-2">{desc}</p>
+        <ul className="flex flex-wrap gap-1 mt-auto" aria-label="Technologies used">
           {tags.map((tag) => (
-            <li key={tag} className="text-xs px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700 font-medium">
+            <li key={tag} className="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700/50 font-medium">
               {tag}
             </li>
           ))}
