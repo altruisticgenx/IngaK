@@ -7,22 +7,33 @@ type Props = {
 
 const Hero: React.FC<Props> = ({ onNavigate }) => {
   return (
-    <section id="home" className="pt-24 pb-16 md:pt-48 md:pb-32 px-4 sm:px-6 relative overflow-hidden">
+    <section
+      id="home"
+      aria-labelledby="hero-heading"
+      className="pt-24 pb-16 md:pt-48 md:pb-32 px-4 sm:px-6 relative overflow-hidden"
+    >
       {/* Decorative Backgrounds */}
-      <div className="absolute top-0 right-0 w-64 h-64 md:w-[500px] md:h-[500px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none opacity-50" />
-      <div className="absolute bottom-0 left-0 w-64 h-64 md:w-[500px] md:h-[500px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none opacity-50" />
+      <div className="absolute top-0 right-0 w-64 h-64 md:w-[500px] md:h-[500px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none opacity-50" aria-hidden="true" />
+      <div className="absolute bottom-0 left-0 w-64 h-64 md:w-[500px] md:h-[500px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none opacity-50" aria-hidden="true" />
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
         <div className="space-y-6 text-center md:text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-xs font-semibold text-cyan-400 mx-auto md:mx-0 shadow-sm">
-            <span className="relative flex h-2 w-2">
+          <div
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-xs font-semibold text-cyan-400 mx-auto md:mx-0 shadow-sm"
+            role="status"
+            aria-live="polite"
+          >
+            <span className="relative flex h-2 w-2" aria-hidden="true">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500" />
             </span>
             Open for Policy & AI Engineering Roles
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-100 leading-tight tracking-tighter">
+          <h1
+            id="hero-heading"
+            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-100 leading-tight tracking-tighter"
+          >
             Translating Regulation into{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
               Intelligent Code
@@ -37,18 +48,22 @@ const Hero: React.FC<Props> = ({ onNavigate }) => {
           <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center md:justify-start">
             <button
               onClick={() => onNavigate('projects')}
-              className="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold transition-all shadow-lg shadow-cyan-900/20 hover:shadow-cyan-900/40 hover:-translate-y-0.5 flex items-center justify-center gap-2 group text-sm"
+              className="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold transition-all shadow-lg shadow-cyan-900/20 hover:shadow-cyan-900/40 hover:-translate-y-0.5 flex items-center justify-center gap-2 group text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              aria-label="View my work and projects"
             >
-              View Work <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              View Work <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
             </button>
-            <button className="px-6 py-3 bg-slate-900 hover:bg-slate-800 text-slate-200 rounded-lg font-bold transition-all border border-slate-700 hover:border-slate-600 flex items-center justify-center gap-2 text-sm">
-              <Download size={18} /> One-Pager
+            <button
+              className="px-6 py-3 bg-slate-900 hover:bg-slate-800 text-slate-200 rounded-lg font-bold transition-all border border-slate-700 hover:border-slate-600 flex items-center justify-center gap-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              aria-label="Download one-page resume"
+            >
+              <Download size={18} aria-hidden="true" /> One-Pager
             </button>
           </div>
         </div>
 
         {/* Code Visual - Hidden on mobile, shown on tablet/desktop */}
-        <div className="relative hidden lg:block">
+        <div className="relative hidden lg:block" aria-hidden="true">
           <div className="relative z-10 bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-2xl transition-transform duration-500 hover:shadow-cyan-900/30">
             <div className="flex items-center justify-between mb-4 border-b border-slate-800 pb-4">
               <div className="flex gap-2">

@@ -20,6 +20,10 @@ const Portfolio: React.FC = () => {
 
     const y = el.getBoundingClientRect().top + window.scrollY - 72;
     window.scrollTo({ top: y, behavior: 'smooth' });
+    
+    // Set focus to the section for screen readers
+    el.setAttribute('tabindex', '-1');
+    el.focus({ preventScroll: true });
   }, []);
 
   useEffect(() => {
@@ -51,13 +55,25 @@ const Portfolio: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-300 font-sans selection:bg-cyan-500/30 selection:text-cyan-200 overflow-x-hidden">
+      {/* Skip to main content link for keyboard users */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-cyan-600 focus:text-white focus:rounded-lg focus:outline-none"
+      >
+        Skip to main content
+      </a>
+      
       <Navbar activeSection={activeSection} scrolled={scrolled} onNavigate={scrollToSection} />
-      <Hero onNavigate={scrollToSection} />
-      <About />
-      <Expertise />
-      <Experience />
-      <Qualifications />
-      <Projects />
+      
+      <main id="main-content" role="main">
+        <Hero onNavigate={scrollToSection} />
+        <About />
+        <Expertise />
+        <Experience />
+        <Qualifications />
+        <Projects />
+      </main>
+      
       <Footer onNavigate={scrollToSection} />
     </div>
   );
