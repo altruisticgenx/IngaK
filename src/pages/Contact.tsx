@@ -3,25 +3,106 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
+import { z } from "zod";
+
+// Validation schema
+const contactSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name must be less than 100 characters"),
+  email: z
+    .string()
+    .trim()
+    .email("Please enter a valid email address")
+    .max(255, "Email must be less than 255 characters"),
+  subject: z
+    .string()
+    .trim()
+    .min(3, "Subject must be at least 3 characters")
+    .max(200, "Subject must be less than 200 characters"),
+  message: z
+    .string()
+    .trim()
+    .min(10, "Message must be at least 10 characters")
+    .max(5000, "Message must be less than 5000 characters"),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
+type FormErrors = Partial<Record<keyof ContactFormData, string>>;
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const validateField = (name: keyof ContactFormData, value: string): string | undefined => {
+    const fieldSchema = contactSchema.shape[name];
+    const result = fieldSchema.safeParse(value);
+    return result.success ? undefined : result.error.errors[0]?.message;
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Message sent! We'll get back to you soon.");
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setIsSubmitting(true);
+    setErrors({});
+
+    const result = contactSchema.safeParse(formData);
+    
+    if (!result.success) {
+      const fieldErrors: FormErrors = {};
+      result.error.errors.forEach((err) => {
+        const field = err.path[0] as keyof ContactFormData;
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = err.message;
+        }
+      });
+      setErrors(fieldErrors);
+      setIsSubmitting(false);
+      toast.error("Please fix the errors below");
+      return;
+    }
+
+    // Simulate form submission (replace with actual API call)
+    setTimeout(() => {
+      toast.success("Message sent! We'll get back to you soon.");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      setIsSubmitting(false);
+    }, 500);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
+    const { name, value } = e.target;
+    const fieldName = name as keyof ContactFormData;
+    
+    setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [fieldName]: value,
+    }));
+
+    // Clear error when user starts typing
+    if (errors[fieldName]) {
+      const error = validateField(fieldName, value);
+      setErrors((prev) => ({
+        ...prev,
+        [fieldName]: error,
+      }));
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    const fieldName = name as keyof ContactFormData;
+    const error = validateField(fieldName, value);
+    setErrors((prev) => ({
+      ...prev,
+      [fieldName]: error,
     }));
   };
 
@@ -44,10 +125,10 @@ const Contact = () => {
           {/* Contact Form */}
           <div className="rounded-2xl bg-card p-8">
             <h2 className="text-2xl font-bold mb-6">Send us a message</h2>
-        <form onSubmit={handleSubmit} className="space-y-6 animate-slide-up stagger-2">
-          <div>
+            <form onSubmit={handleSubmit} className="space-y-6 animate-slide-up stagger-2" noValidate>
+              <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-2">
-                  Name
+                  Name *
                 </label>
                 <input
                   type="text"
@@ -55,14 +136,25 @@ const Contact = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring"
+                  onBlur={handleBlur}
+                  maxLength={100}
+                  aria-invalid={!!errors.name}
+                  aria-describedby={errors.name ? "name-error" : undefined}
+                  className={`w-full px-4 py-3 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-ring ${
+                    errors.name ? "border-red-500" : "border-input"
+                  }`}
                   placeholder="Your name"
                 />
+                {errors.name && (
+                  <p id="name-error" className="text-red-500 text-sm mt-1">
+                    {errors.name}
+                  </p>
+                )}
               </div>
+              
               <div>
                 <label htmlFor="email" className="block text-sm font-medium mb-2">
-                  Email
+                  Email *
                 </label>
                 <input
                   type="email"
@@ -70,14 +162,25 @@ const Contact = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring"
+                  onBlur={handleBlur}
+                  maxLength={255}
+                  aria-invalid={!!errors.email}
+                  aria-describedby={errors.email ? "email-error" : undefined}
+                  className={`w-full px-4 py-3 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-ring ${
+                    errors.email ? "border-red-500" : "border-input"
+                  }`}
                   placeholder="your.email@example.com"
                 />
+                {errors.email && (
+                  <p id="email-error" className="text-red-500 text-sm mt-1">
+                    {errors.email}
+                  </p>
+                )}
               </div>
+              
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                  Subject
+                  Subject *
                 </label>
                 <input
                   type="text"
@@ -85,31 +188,59 @@ const Contact = () => {
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring"
+                  onBlur={handleBlur}
+                  maxLength={200}
+                  aria-invalid={!!errors.subject}
+                  aria-describedby={errors.subject ? "subject-error" : undefined}
+                  className={`w-full px-4 py-3 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-ring ${
+                    errors.subject ? "border-red-500" : "border-input"
+                  }`}
                   placeholder="What's this about?"
                 />
+                {errors.subject && (
+                  <p id="subject-error" className="text-red-500 text-sm mt-1">
+                    {errors.subject}
+                  </p>
+                )}
               </div>
+              
               <div>
                 <label htmlFor="message" className="block text-sm font-medium mb-2">
-                  Message
+                  Message *
                 </label>
                 <textarea
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  required
+                  onBlur={handleBlur}
+                  maxLength={5000}
                   rows={6}
-                  className="w-full px-4 py-3 rounded-lg border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring resize-none"
+                  aria-invalid={!!errors.message}
+                  aria-describedby={errors.message ? "message-error" : undefined}
+                  className={`w-full px-4 py-3 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-ring resize-none ${
+                    errors.message ? "border-red-500" : "border-input"
+                  }`}
                   placeholder="Tell us what's on your mind..."
                 />
+                <div className="flex justify-between mt-1">
+                  <p className="text-xs text-muted-foreground">
+                    {formData.message.length}/5000 characters
+                  </p>
+                  {errors.message && (
+                    <p id="message-error" className="text-red-500 text-sm">
+                      {errors.message}
+                    </p>
+                  )}
+                </div>
               </div>
+              
               <Button 
                 type="submit"
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-full py-6"
+                disabled={isSubmitting}
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-full py-6 disabled:opacity-50"
               >
-                Send Message
+                {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>
           </div>

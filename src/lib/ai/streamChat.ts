@@ -1,3 +1,5 @@
+import { supabase } from "@/integrations/supabase/client";
+
 export type ChatRole = "user" | "assistant";
 
 export type ChatMessage = {
@@ -24,11 +26,19 @@ type StreamChatArgs = {
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
 
 export async function streamChat({ messages, onDelta, onDone, signal }: StreamChatArgs): Promise<void> {
+  // Get current session for auth token
+  const { data: sessionData } = await supabase.auth.getSession();
+  const accessToken = sessionData?.session?.access_token;
+
+  if (!accessToken) {
+    throw new HttpError(401, "Please sign in to use the chat feature");
+  }
+
   const resp = await fetch(CHAT_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify({ messages }),
     signal,
@@ -36,7 +46,19 @@ export async function streamChat({ messages, onDelta, onDone, signal }: StreamCh
 
   if (!resp.ok || !resp.body) {
     const text = await resp.text().catch(() => "");
-    throw new HttpError(resp.status, text || `Failed to start stream (${resp.status})`);
+    
+    // Parse error message from JSON if possible
+    let errorMessage = text || `Failed to start stream (${resp.status})`;
+    try {
+      const errorJson = JSON.parse(text) as { error?: string };
+      if (errorJson.error) {
+        errorMessage = errorJson.error;
+      }
+    } catch {
+      // Use text as-is
+    }
+    
+    throw new HttpError(resp.status, errorMessage);
   }
 
   const reader = resp.body.getReader();
