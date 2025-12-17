@@ -1,0 +1,80 @@
+name: chore/upgrade-react
+
+on:
+  push:
+    branches:
+      - chore/upgrade-react
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    env:
+      GIT_COMMITTER_NAME: "github-actions[bot]"
+      GIT_COMMITTER_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
+    steps:
+      - name: Checkout (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Set up Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Set up Bun (optional if project uses bun)
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Configure git for actions
+        run: |
+          git config user.name "${GIT_COMMITTER_NAME}"
+          git config user.email "${GIT_COMMITTER_EMAIL}"
+
+      - name: Install deps (Bun)
+        run: |
+          if command -v bun >/dev/null 2>&1; then
+            bun install
+          else
+            npm ci
+          fi
+
+      - name: Upgrade React and types to latest
+        run: |
+          if command -v bun >/dev/null 2>&1; then
+            bun add react@latest react-dom@latest
+            bun add -d @types/react@latest @types/react-dom@latest || true
+            bun install
+          else
+            npm install react@latest react-dom@latest --save
+            npm install -D @types/react@latest @types/react-dom@latest || true
+            npm ci
+          fi
+
+      - name: Run type check
+        run: |
+          npx tsc --noEmit
+
+      - name: Run tests
+        run: |
+          if command -v bun >/dev/null 2>&1; then
+            bun test
+          else
+            npm test
+          fi
+
+      - name: Commit lockfile/package.json if changed
+        run: |
+          git add package.json package-lock.json yarn.lock bun.lock bun.lockb || true
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "chore(deps): upgrade react, react-dom and @types/react" || true
+            git push origin HEAD:chore/upgrade-react
+          else
+            echo "No dependency changes to commit"
+          fi
