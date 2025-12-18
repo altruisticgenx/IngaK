@@ -1,14 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, Suspense, lazy } from 'react';
 import Navbar from '@/components/portfolio/navigation/Navbar';
 import Hero from '@/sections/Hero';
-import About from '@/sections/About';
-import Expertise from '@/sections/Expertise';
-import Experience from '@/sections/Experience';
-import Qualifications from '@/sections/Qualifications';
-import Projects from '@/sections/Projects';
-import Articles from '@/sections/Articles';
 import Footer from '@/components/portfolio/layout/Footer';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import { SectionSkeleton } from '@/components/ui/SectionSkeleton';
+
+// Lazy load non-critical sections for code splitting
+const LazyAbout = lazy(() => import('@/sections/About'));
+const LazyExpertise = lazy(() => import('@/sections/Expertise'));
+const LazyExperience = lazy(() => import('@/sections/Experience'));
+const LazyQualifications = lazy(() => import('@/sections/Qualifications'));
+const LazyProjects = lazy(() => import('@/sections/Projects'));
+const LazyArticles = lazy(() => import('@/sections/Articles'));
 
 const SECTIONS = [
   'home',
@@ -67,13 +70,33 @@ const Portfolio: React.FC = () => {
       <Navbar activeSection={activeSection} scrolled={scrolled} onNavigate={scrollToSection} />
       
       <main id="main-content" role="main">
+        {/* Hero is critical - loaded immediately */}
         <Hero onNavigate={scrollToSection} />
-        <About />
-        <Expertise />
-        <Experience />
-        <Qualifications />
-        <Projects />
-        <Articles />
+        
+        {/* Non-critical sections - lazy loaded */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <LazyAbout />
+        </Suspense>
+        
+        <Suspense fallback={<SectionSkeleton />}>
+          <LazyExpertise />
+        </Suspense>
+        
+        <Suspense fallback={<SectionSkeleton />}>
+          <LazyExperience />
+        </Suspense>
+        
+        <Suspense fallback={<SectionSkeleton />}>
+          <LazyQualifications />
+        </Suspense>
+        
+        <Suspense fallback={<SectionSkeleton />}>
+          <LazyProjects />
+        </Suspense>
+        
+        <Suspense fallback={<SectionSkeleton />}>
+          <LazyArticles />
+        </Suspense>
       </main>
       
       <Footer onNavigate={scrollToSection} />

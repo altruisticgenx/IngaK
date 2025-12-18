@@ -44,6 +44,39 @@ export type Database = {
         }
         Relationships: []
       }
+      feature_flags: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          enabled: boolean
+          id: string
+          name: string
+          rollout_percentage: number | null
+          updated_at: string | null
+          user_ids: string[] | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          enabled?: boolean
+          id?: string
+          name: string
+          rollout_percentage?: number | null
+          updated_at?: string | null
+          user_ids?: string[] | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          enabled?: boolean
+          id?: string
+          name?: string
+          rollout_percentage?: number | null
+          updated_at?: string | null
+          user_ids?: string[] | null
+        }
+        Relationships: []
+      }
       rate_limits: {
         Row: {
           created_at: string
