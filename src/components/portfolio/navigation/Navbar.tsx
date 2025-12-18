@@ -19,7 +19,6 @@ const navItems: NavItem[] = [
   { name: "Articles", id: "articles" },
 ];
 
-const blogLink = { name: "Blog", href: "/blog" };
 const chatLink = { name: "AI Chat", href: "/chat" };
 
 const Navbar: React.FC<Props> = ({ activeSection, scrolled, onNavigate }) => {
@@ -132,16 +131,6 @@ const Navbar: React.FC<Props> = ({ activeSection, scrolled, onNavigate }) => {
             ))}
 
             <a
-              href={blogLink.href}
-              className={cn(
-                "relative text-xs font-medium text-slate-400 transition-colors hover:text-cyan-400",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded"
-              )}
-            >
-              {blogLink.name}
-            </a>
-
-            <a
               href={chatLink.href}
               className={cn(
                 "relative text-xs font-medium text-slate-400 transition-colors hover:text-cyan-400",
@@ -158,7 +147,6 @@ const Navbar: React.FC<Props> = ({ activeSection, scrolled, onNavigate }) => {
                 "transition-all hover:scale-105 hover:bg-cyan-500/10 active:scale-95",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               )}
-              aria-label="Navigate to contact section"
             >
               Contact
             </button>
@@ -209,14 +197,6 @@ const Navbar: React.FC<Props> = ({ activeSection, scrolled, onNavigate }) => {
           ))}
 
           <a
-            href={blogLink.href}
-            className="w-full py-2 text-center text-xl font-medium text-slate-400 transition-colors hover:text-cyan-300"
-            role="menuitem"
-          >
-            {blogLink.name}
-          </a>
-
-          <a
             href={chatLink.href}
             className="w-full py-2 text-center text-xl font-medium text-slate-400 transition-colors hover:text-cyan-300"
             role="menuitem"
@@ -231,7 +211,6 @@ const Navbar: React.FC<Props> = ({ activeSection, scrolled, onNavigate }) => {
               "transition-colors hover:bg-cyan-500",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             )}
-            aria-label="Navigate to contact section"
           >
             Contact Me
           </button>

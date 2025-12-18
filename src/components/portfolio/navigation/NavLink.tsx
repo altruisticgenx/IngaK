@@ -15,7 +15,6 @@ const NavLink: React.FC<Props> = ({ id, name, activeSection, onClick, mobile = f
     <button
       onClick={() => onClick(id)}
       aria-current={isActive ? 'true' : undefined}
-      aria-label={`Navigate to ${name} section`}
       className={`
         font-medium transition-all duration-300 relative group
         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded-sm
