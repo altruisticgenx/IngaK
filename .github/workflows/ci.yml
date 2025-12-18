@@ -1,0 +1,64 @@
+name: Continuous Integration & Audit
+
+on:
+  pull_request:
+    branches: [main, master]
+  push:
+    branches: [main, master]
+
+jobs:
+  build_test_lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install Dependencies
+        run: bun install
+
+      - name: 🔐 Run ESLint (Code Quality Audit)
+        run: bun run lint
+
+      - name: 🔒 Run Type Check (TypeScript Audit)
+        run: npx tsc --noEmit
+
+      - name: 🧪 Run Unit Tests (Vitest)
+        run: bun test
+
+  e2e_testing:
+    needs: build_test_lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install Dependencies
+        run: bun install
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: 🌐 Run E2E Tests (Playwright)
+        run: npx playwright test

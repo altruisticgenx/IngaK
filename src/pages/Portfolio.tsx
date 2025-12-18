@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Navbar from '@/components/portfolio/navigation/Navbar';
 import Hero from '@/sections/Hero';
 import About from '@/sections/About';
@@ -8,12 +8,29 @@ import Qualifications from '@/sections/Qualifications';
 import Projects from '@/sections/Projects';
 import Articles from '@/sections/Articles';
 import Footer from '@/components/portfolio/layout/Footer';
-import { debounce, type DebouncedFn } from '@/utils/debounce';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+
+const SECTIONS = [
+  'home',
+  'about',
+  'expertise',
+  'experience',
+  'qualifications',
+  'projects',
+  'articles',
+  'contact',
+] as const;
 
 const Portfolio: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
   const [scrolled, setScrolled] = useState<boolean>(false);
-  const debouncedScrollRef = useRef<DebouncedFn<() => void> | null>(null);
+
+  // IntersectionObserver-based scroll spy (performance optimized)
+  const handleSectionIntersection = useCallback((id: string) => {
+    setActiveSection(id);
+  }, []);
+
+  useIntersectionObserver(handleSectionIntersection, SECTIONS);
 
   const scrollToSection = useCallback((id: string) => {
     const el = document.getElementById(id);
@@ -27,31 +44,14 @@ const Portfolio: React.FC = () => {
     el.focus({ preventScroll: true });
   }, []);
 
+  // Simple scroll detection for navbar background
   useEffect(() => {
-    const sections = ['home', 'about', 'expertise', 'experience', 'qualifications', 'projects', 'articles', 'contact'];
-
-    debouncedScrollRef.current = debounce(() => {
+    const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-
-      const current = sections.find((section) => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top >= -50 && rect.top < window.innerHeight / 3;
-        }
-        return false;
-      });
-      if (current) setActiveSection(current);
-    }, 100);
-
-    window.addEventListener('scroll', debouncedScrollRef.current);
-
-    return () => {
-      debouncedScrollRef.current?.cancel();
-      if (debouncedScrollRef.current) {
-        window.removeEventListener('scroll', debouncedScrollRef.current);
-      }
     };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (

@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+    allow:
+      - dependency-type: "direct"
+    labels:
+      - "deps"
+      - "security"
+    commit-message:
+      prefix: "chore(deps)"
+    reviewers:
+      - "altruisticgenx"
