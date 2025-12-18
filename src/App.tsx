@@ -3,8 +3,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { FeatureFlagProvider } from "@/contexts/FeatureFlagContext";
+import { AnimatePresence } from "framer-motion";
+import PageTransition from "@/components/PageTransition";
 
 // Critical path - loaded immediately
 import Portfolio from "./pages/Portfolio";
@@ -34,6 +36,33 @@ const PageLoader = () => (
   </div>
 );
 
+// Animated routes component
+const AnimatedRoutes = () => {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageTransition><Portfolio /></PageTransition>} />
+        <Route path="/blog" element={<PageTransition><Index /></PageTransition>} />
+        <Route path="/chat" element={<PageTransition><Chat /></PageTransition>} />
+        <Route path="/article/:id" element={<PageTransition><Article /></PageTransition>} />
+        <Route path="/wellness" element={<PageTransition><Wellness /></PageTransition>} />
+        <Route path="/travel" element={<PageTransition><Travel /></PageTransition>} />
+        <Route path="/creativity" element={<PageTransition><Creativity /></PageTransition>} />
+        <Route path="/growth" element={<PageTransition><Growth /></PageTransition>} />
+        <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+        <Route path="/authors" element={<PageTransition><Authors /></PageTransition>} />
+        <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+        <Route path="/style-guide" element={<PageTransition><StyleGuide /></PageTransition>} />
+        <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
+        <Route path="/terms" element={<PageTransition><Terms /></PageTransition>} />
+        <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <FeatureFlagProvider>
@@ -42,24 +71,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<Portfolio />} />
-              <Route path="/blog" element={<Index />} />
-              <Route path="/chat" element={<Chat />} />
-              <Route path="/article/:id" element={<Article />} />
-              <Route path="/wellness" element={<Wellness />} />
-              <Route path="/travel" element={<Travel />} />
-              <Route path="/creativity" element={<Creativity />} />
-              <Route path="/growth" element={<Growth />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/authors" element={<Authors />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/style-guide" element={<StyleGuide />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/terms" element={<Terms />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <AnimatedRoutes />
           </Suspense>
         </BrowserRouter>
       </TooltipProvider>
