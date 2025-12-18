@@ -10,22 +10,22 @@ const Hero: React.FC<Props> = ({ onNavigate }) => {
     <section
       id="home"
       aria-labelledby="hero-heading"
-      className="relative min-h-[85vh] sm:min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950"
+      className="relative min-h-[70vh] sm:min-h-[80vh] md:min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950"
     >
       {/* Animated Background Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" aria-hidden="true" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:2rem_2rem] sm:bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" aria-hidden="true" />
       
-      {/* Animated Gradient Orbs - Smaller on mobile */}
-      <div className="absolute top-1/4 -left-16 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 bg-cyan-500/20 rounded-full blur-[60px] sm:blur-[80px] animate-float" aria-hidden="true" />
-      <div className="absolute bottom-1/4 -right-16 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 bg-blue-600/20 rounded-full blur-[60px] sm:blur-[80px] animate-float-delayed" aria-hidden="true" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] bg-gradient-to-r from-cyan-500/5 to-blue-500/5 rounded-full blur-[80px]" aria-hidden="true" />
+      {/* Animated Gradient Orbs */}
+      <div className="absolute top-1/4 -left-8 sm:-left-16 w-24 h-24 sm:w-48 sm:h-48 md:w-64 md:h-64 bg-cyan-500/20 rounded-full blur-[40px] sm:blur-[80px] animate-float" aria-hidden="true" />
+      <div className="absolute bottom-1/4 -right-8 sm:-right-16 w-24 h-24 sm:w-48 sm:h-48 md:w-64 md:h-64 bg-blue-600/20 rounded-full blur-[40px] sm:blur-[80px] animate-float-delayed" aria-hidden="true" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] bg-gradient-to-r from-cyan-500/5 to-blue-500/5 rounded-full blur-[60px] sm:blur-[80px]" aria-hidden="true" />
 
       {/* Content Container */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-12 sm:py-16 md:py-0">
-        <div className="grid gap-8 lg:grid-cols-2 lg:gap-10 items-center">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-0">
+        <div className="grid gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-10 items-center">
           
           {/* Left Column - Text Content */}
-          <div className="space-y-4 sm:space-y-5 text-center lg:text-left">
+          <div className="space-y-3 sm:space-y-4 text-center lg:text-left">
             
             {/* Status Badge */}
             <div 
@@ -44,7 +44,7 @@ const Hero: React.FC<Props> = ({ onNavigate }) => {
             {/* Main Heading */}
             <h1
               id="hero-heading"
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight animate-slide-up stagger-2"
+              className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight animate-slide-up stagger-2"
             >
               <span className="block text-slate-100">Translating</span>
               <span className="block text-slate-100">Regulation into</span>
@@ -52,63 +52,61 @@ const Hero: React.FC<Props> = ({ onNavigate }) => {
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-400 animate-gradient">
                   Intelligent Code
                 </span>
-                <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full transform scale-x-0 animate-[scaleX_0.8s_ease-out_1s_forwards] origin-left" />
+                <span className="absolute -bottom-0.5 sm:-bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full transform scale-x-0 animate-[scaleX_0.8s_ease-out_1s_forwards] origin-left" />
               </span>
             </h1>
 
             {/* Description */}
-            <p className="text-xs sm:text-sm md:text-base text-slate-400 max-w-md mx-auto lg:mx-0 leading-relaxed animate-slide-up stagger-3">
+            <p className="text-[11px] xs:text-xs sm:text-sm md:text-base text-slate-400 max-w-md mx-auto lg:mx-0 leading-relaxed animate-slide-up stagger-3">
               AI Policy Researcher & Applied AI Engineer bridging{' '}
               <span className="text-cyan-400 font-medium">federal compliance</span> and{' '}
               <span className="text-blue-400 font-medium">cutting-edge automation</span>.
             </p>
 
             {/* Feature Pills */}
-            <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center lg:justify-start animate-slide-up stagger-4">
+            <div className="flex flex-wrap gap-1 sm:gap-1.5 justify-center lg:justify-start animate-slide-up stagger-4">
               {['NIST', 'LLM Integration', 'Secure Gov'].map((tag) => (
                 <span 
                   key={tag}
-                  className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-slate-800/50 border border-slate-700/50 text-[10px] sm:text-xs text-slate-300 hover:border-cyan-500/50 hover:text-cyan-400 transition-all duration-300 cursor-default"
+                  className="inline-flex items-center gap-0.5 sm:gap-1 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full bg-slate-800/50 border border-slate-700/50 text-[9px] sm:text-xs text-slate-300 hover:border-cyan-500/50 hover:text-cyan-400 transition-all duration-300 cursor-default"
                 >
-                  <Zap className="w-2.5 h-2.5" aria-hidden="true" />
+                  <Zap className="w-2 h-2 sm:w-2.5 sm:h-2.5" aria-hidden="true" />
                   {tag}
                 </span>
               ))}
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-row gap-2 sm:gap-3 pt-2 justify-center lg:justify-start animate-slide-up stagger-5">
+            <div className="flex flex-row gap-2 sm:gap-3 pt-1 sm:pt-2 justify-center lg:justify-start animate-slide-up stagger-5">
               <button
                 onClick={() => onNavigate('projects')}
-                className="group relative px-4 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-lg font-bold text-xs sm:text-sm transition-all duration-300 shadow-md shadow-cyan-900/30 hover:shadow-cyan-500/40 hover:-translate-y-0.5 flex items-center justify-center gap-1.5 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-                aria-label="View my work and projects"
+                className="group relative px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-lg font-bold text-[11px] sm:text-sm transition-all duration-300 shadow-md shadow-cyan-900/30 hover:shadow-cyan-500/40 hover:-translate-y-0.5 flex items-center justify-center gap-1 sm:gap-1.5 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               >
-                <span className="relative z-10 flex items-center gap-1.5">
+                <span className="relative z-10 flex items-center gap-1 sm:gap-1.5">
                   View Work
-                  <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
+                  <ChevronRight size={12} className="sm:w-3.5 sm:h-3.5 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </button>
               
               <button
-                className="group px-4 sm:px-5 py-2 sm:py-2.5 glass-dark hover:bg-slate-800/80 text-slate-200 rounded-lg font-bold text-xs sm:text-sm transition-all duration-300 border border-slate-700/50 hover:border-cyan-500/30 flex items-center justify-center gap-1.5 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-                aria-label="Download one-page resume"
+                className="group px-3 sm:px-5 py-2 sm:py-2.5 glass-dark hover:bg-slate-800/80 text-slate-200 rounded-lg font-bold text-[11px] sm:text-sm transition-all duration-300 border border-slate-700/50 hover:border-cyan-500/30 flex items-center justify-center gap-1 sm:gap-1.5 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               >
-                <Download size={14} aria-hidden="true" />
+                <Download size={12} className="sm:w-3.5 sm:h-3.5" aria-hidden="true" />
                 One-Pager
               </button>
             </div>
 
             {/* Stats Row - Mobile */}
-            <div className="grid grid-cols-3 gap-2 pt-3 lg:hidden animate-slide-up stagger-6">
+            <div className="grid grid-cols-3 gap-2 pt-2 lg:hidden animate-slide-up stagger-6">
               {[
                 { value: '4+', label: 'Years' },
                 { value: '12+', label: 'Projects' },
                 { value: 'DoD', label: 'Cleared' },
               ].map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <div className="text-lg sm:text-xl font-bold text-cyan-400">{stat.value}</div>
-                  <div className="text-[9px] sm:text-[10px] text-slate-500 uppercase tracking-wider">{stat.label}</div>
+                <div key={stat.label} className="text-center py-2 px-1 rounded-lg bg-slate-800/30 border border-slate-700/30">
+                  <div className="text-base sm:text-lg font-bold text-cyan-400">{stat.value}</div>
+                  <div className="text-[8px] sm:text-[10px] text-slate-500 uppercase tracking-wider">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -216,11 +214,11 @@ const Hero: React.FC<Props> = ({ onNavigate }) => {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 animate-fade-in stagger-7">
-        <span className="text-[9px] text-slate-500 uppercase tracking-widest">Scroll</span>
-        <div className="w-4 h-7 rounded-full border border-slate-700 flex items-start justify-center p-1">
-          <div className="w-0.5 h-1.5 bg-cyan-400 rounded-full animate-bounce" />
+      {/* Scroll Indicator - Hidden on very small screens */}
+      <div className="absolute bottom-2 sm:bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 flex-col items-center gap-1 animate-fade-in stagger-7 hidden xs:flex">
+        <span className="text-[8px] sm:text-[9px] text-slate-500 uppercase tracking-widest">Scroll</span>
+        <div className="w-3.5 h-6 sm:w-4 sm:h-7 rounded-full border border-slate-700 flex items-start justify-center p-1">
+          <div className="w-0.5 h-1 sm:h-1.5 bg-cyan-400 rounded-full animate-bounce" />
         </div>
       </div>
     </section>
