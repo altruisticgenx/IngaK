@@ -5,7 +5,7 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", "node_modules"] },
+  { ignores: ["dist", "node_modules", "*.config.js", "*.config.ts"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
@@ -18,7 +18,7 @@ export default tseslint.config(
       "react-refresh": reactRefresh,
     },
     rules: {
-      // React Hooks - Federal-grade strictness
+      // === React Hooks - Federal-grade strictness ===
       ...reactHooks.configs.recommended.rules,
       "react-hooks/exhaustive-deps": "error",
       "react-hooks/rules-of-hooks": "error",
@@ -26,15 +26,34 @@ export default tseslint.config(
       // React Refresh
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
       
-      // TypeScript - High security standard
+      // === TypeScript - High security standard ===
       "@typescript-eslint/no-explicit-any": "error",
-      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
+      "@typescript-eslint/no-non-null-assertion": "warn",
+      "@typescript-eslint/prefer-optional-chain": "warn",
       
-      // Code quality
+      // === Security hardening ===
+      "no-eval": "error",
+      "no-implied-eval": "error",
+      "no-new-func": "error",
+      "no-script-url": "error",
+      
+      // === Code quality & correctness ===
       "eqeqeq": ["error", "always"],
       "no-console": ["warn", { allow: ["warn", "error", "debug"] }],
       "prefer-const": "error",
       "no-var": "error",
+      "curly": ["error", "all"],
+      "no-throw-literal": "error",
+      "no-return-await": "warn",
+      "no-await-in-loop": "warn",
+      
+      // === Best practices ===
+      "no-nested-ternary": "warn",
+      "no-unneeded-ternary": "error",
+      "object-shorthand": ["error", "always"],
+      "prefer-arrow-callback": "error",
+      "prefer-template": "warn",
     },
   },
 );
