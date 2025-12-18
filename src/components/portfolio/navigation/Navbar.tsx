@@ -121,11 +121,7 @@ const Navbar: React.FC<Props> = ({ activeSection, scrolled, onNavigate }) => {
           </button>
 
           {/* Desktop Links */}
-          <div
-            className="hidden items-center gap-4 md:flex lg:gap-5"
-            role="menubar"
-            aria-label="Main menu"
-          >
+          <div className="hidden items-center gap-4 md:flex lg:gap-5">
             {navItems.map((link) => (
               <NavLink
                 key={link.id}
